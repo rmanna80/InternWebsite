@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ryan Manna — BPD Internship Portfolio</title>
+<meta name="description" content="Civilian analyst portfolio — applied data science, OSINT, and cybersecurity. Burlington Police Department internship." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy:        #0F1B3D;
+  --navy-deep:   #081027;
+  --navy-mid:    #1A2754;
+  --amber:       #D4A017;
+  --amber-soft:  #F4D58D;
+  --teal:        #0E7C86;
+  --bg:          #F4F4EE;
+  --card:        #FFFFFF;
+  --text:        #1A1A2E;
+  --muted:       #5A6378;
+  --line:        rgba(15,27,61,0.10);
+
+  --serif:  'DM Serif Display', Georgia, serif;
+  --sans:   'Inter Tight', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono:   'JetBrains Mono', 'SF Mono', Menlo, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ============ TEXTURE OVERLAY ============ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.6;
+}
+
+main, header, footer { position: relative; z-index: 2; }
+
+/* ============ HEADER / HERO ============ */
+.hero {
+  background: var(--navy);
+  background-image:
+    radial-gradient(ellipse at top right, var(--navy-mid) 0%, transparent 60%),
+    radial-gradient(ellipse at bottom left, rgba(212,160,23,0.08) 0%, transparent 50%);
+  color: #fff;
+  padding: 1.25rem 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--amber);
+}
+
+.nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.nav-brand {
+  color: var(--amber);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.75rem;
+  list-style: none;
+}
+
+@media (max-width: 600px) {
+  .nav { font-size: 0.65rem; padding: 0 1rem; flex-wrap: wrap; gap: 0.5rem; }
+  .nav-brand { font-size: 0.6rem; flex-basis: 100%; text-align: left; padding-top: 0.25rem; }
+  .nav-links { gap: 1.1rem; flex-basis: 100%; padding-bottom: 0.5rem; }
+  .nav-links a { letter-spacing: 0.1em; }
+}
+
+.nav-links a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover { color: var(--amber); }
+
+.hero-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 6rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3rem;
+  align-items: end;
+}
+
+.hero-tag {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  color: var(--amber);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  padding: 0.4rem 0.9rem;
+  background: rgba(212,160,23,0.12);
+  border: 1px solid rgba(212,160,23,0.4);
+  border-radius: 2px;
+}
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 .accent {
+  color: var(--amber);
+  font-style: italic;
+}
+
+.hero-sub {
+  font-size: 1.15rem;
+  color: rgba(255,255,255,0.75);
+  max-width: 38rem;
+  font-weight: 300;
+}
+
+.hero-meta {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  text-align: right;
+  border-left: 2px solid var(--amber);
+  padding-left: 1.5rem;
+}
+
+.hero-meta div { margin-bottom: 0.5rem; }
+.hero-meta strong { color: #fff; font-weight: 500; }
+
+@media (max-width: 700px) {
+  .hero-content { grid-template-columns: 1fr; }
+  .hero-meta { text-align: left; border-left: 2px solid var(--amber); }
+}
+
+/* ============ SECTION COMMON ============ */
+section {
+  padding: 6rem 0;
+  position: relative;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  color: var(--amber);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-label::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--amber);
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: var(--navy);
+  margin-bottom: 3rem;
+  line-height: 1.15;
+  max-width: 38rem;
+}
+
+/* ============ ABOUT ============ */
+.about {
+  background: var(--bg);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+.about-body p {
+  font-size: 1.05rem;
+  margin-bottom: 1.25rem;
+  color: var(--text);
+}
+
+.about-body p:last-child { margin-bottom: 0; }
+
+.disclosure {
+  background: var(--navy);
+  color: #fff;
+  padding: 2rem;
+  border-left: 4px solid var(--amber);
+  position: relative;
+}
+
+.disclosure::before {
+  content: '01';
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--amber);
+  letter-spacing: 0.2em;
+}
+
+.disclosure h3 {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--amber);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.disclosure p {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 0.85rem;
+  line-height: 1.65;
+}
+
+.disclosure p:last-child { margin-bottom: 0; }
+
+/* ============ PROJECTS ============ */
+.projects {
+  background: #fff;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 800px) {
+  .project-grid { grid-template-columns: 1fr; }
+}
+
+.project {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 2rem;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.project:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px -12px rgba(15,27,61,0.18);
+  border-color: var(--amber);
+}
+
+.project-num {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--amber);
+  font-weight: 700;
+  margin-bottom: 0.85rem;
+}
+
+.project h3 {
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  font-weight: 400;
+  color: var(--navy);
+  margin-bottom: 0.65rem;
+  line-height: 1.2;
+}
+
+.project-tags {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--teal);
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.project p {
+  color: var(--text);
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+
+.project-status {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.7rem;
+  display: inline-block;
+  border-radius: 2px;
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+.status-public {
+  background: rgba(14,124,134,0.1);
+  color: var(--teal);
+  border: 1px solid rgba(14,124,134,0.3);
+}
+
+.status-private {
+  background: rgba(15,27,61,0.06);
+  color: var(--muted);
+  border: 1px solid rgba(15,27,61,0.15);
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--navy);
+  text-decoration: none;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--navy);
+  padding-bottom: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  align-self: flex-start;
+}
+
+.project-link:hover {
+  color: var(--amber);
+  border-color: var(--amber);
+}
+
+.project-link::after {
+  content: '→';
+  transition: transform 0.2s ease;
+}
+
+.project-link:hover::after { transform: translateX(3px); }
+
+/* ============ SKILLS ============ */
+.skills {
+  background: var(--navy);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.skills::before {
+  content: '';
+  position: absolute;
+  top: -120px; right: -120px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(212,160,23,0.08) 0%, transparent 70%);
+  z-index: 0;
+}
+
+.skills .container { position: relative; z-index: 1; }
+
+.skills .section-title { color: #fff; }
+
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+@media (max-width: 800px) {
+  .skill-grid { grid-template-columns: 1fr; }
+}
+
+.skill {
+  background: var(--navy);
+  padding: 1.75rem 1.5rem;
+  transition: background 0.3s ease;
+}
+
+.skill:hover { background: var(--navy-mid); }
+
+.skill-num {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--amber);
+  letter-spacing: 0.2em;
+  margin-bottom: 0.65rem;
+}
+
+.skill h4 {
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.45rem;
+}
+
+.skill p {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.5;
+}
+
+/* ============ TOOLS ============ */
+.tools {
+  background: var(--bg);
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+}
+
+@media (max-width: 800px) {
+  .tools-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
+.tool-group h4 {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.tool-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tool-list span {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 0.4rem 0.8rem;
+  border-radius: 3px;
+  color: var(--navy);
+  font-weight: 500;
+}
+
+/* ============ CONTACT ============ */
+.contact {
+  background: var(--navy-deep);
+  color: #fff;
+  padding: 6rem 0;
+  text-align: center;
+}
+
+.contact h2 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 400;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+.contact h2 .accent {
+  color: var(--amber);
+  font-style: italic;
+}
+
+.contact p {
+  color: rgba(255,255,255,0.7);
+  max-width: 32rem;
+  margin: 0 auto 2.5rem;
+}
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.contact-link {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.9rem 1.5rem;
+  border: 1px solid rgba(255,255,255,0.25);
+  transition: all 0.2s ease;
+}
+
+.contact-link:hover {
+  background: var(--amber);
+  color: var(--navy-deep);
+  border-color: var(--amber);
+}
+
+/* ============ FOOTER ============ */
+footer {
+  background: #000;
+  color: rgba(255,255,255,0.45);
+  padding: 2rem 0;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+/* ============ ANIMATIONS ============ */
+/* Progressive enhancement: only hide if JS supports reveal */
+.js-reveal .reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.js-reveal .reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal .reveal { opacity: 1; transform: none; transition: none; }
+  .hero h1, .hero-tag, .hero-sub, .hero-meta { animation: none; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero h1, .hero-tag, .hero-sub, .hero-meta {
+  animation: fadeInUp 0.8s ease both;
+}
+.hero-tag { animation-delay: 0.1s; }
+.hero h1 { animation-delay: 0.25s; }
+.hero-sub { animation-delay: 0.4s; }
+.hero-meta { animation-delay: 0.55s; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <nav class="nav">
+    <span class="nav-brand">CIVILIAN ANALYST · 2025</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Work</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="hero-content">
+    <div>
+      <span class="hero-tag">Internship Portfolio · 2025</span>
+      <h1>Applied data &amp; <span class="accent">cybersecurity</span><br/>at the public-safety edge.</h1>
+      <p class="hero-sub">A civilian analyst's record of building operational tools, stress-testing emerging hardware threats, and translating findings into action — for the Burlington Police Department.</p>
+    </div>
+    <div class="hero-meta">
+      <div><strong>Ryan Manna</strong></div>
+      <div>Elon University</div>
+      <div>MSBA 2026</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="about">
+  <div class="container">
+    <div class="section-label">About this work</div>
+    <h2 class="section-title">Eight projects, three teams, one civilian seat at the table.</h2>
+
+    <div class="about-grid">
+      <div class="about-body reveal">
+        <p>This documents the internship at the Burlington Police Department spanning data science, open-source intelligence, and applied cybersecurity. The work moved between sworn officers, IT, command leadership, and the records team — translating technical findings into something a sergeant, attorney, or commander could act on.</p>
+        <p>Where the underlying work is approved for public release, the linked reports below are the actual deliverables, with personally-identifying material removed and operational specifics intentionally omitted. Where it isn't, projects are described at a level that conveys what was learned without reproducing what was built internally.</p>
+      </div>
+
+      <aside class="disclosure reveal">
+        <h3>A note on what's here</h3>
+        <p>Operational specifics — locations, identities, real datasets, and tactical details — are intentionally omitted. Several projects supported active or sensitive work and are described in general terms only.</p>
+        <p>The reports that are linked have been reviewed and approved for public release. Aggregate analyses contain no personally-identifying material; lab reports describe authorized, air-gapped exercises only.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects" class="projects">
+  <div class="container">
+    <div class="section-label">Selected work</div>
+    <h2 class="section-title">Projects, sanitized for daylight.</h2>
+
+    <div class="project-grid">
+
+      <article class="project reveal">
+        <div class="project-num">01 / Geospatial Optimization</div>
+        <h3>Camera Placement Optimization</h3>
+        <div class="project-tags">Python · APIs · Geospatial · Scoring</div>
+        <p>Built a Python pipeline that ranks candidate intersections by traffic volume, road class, and inter-camera coverage overlap — surfacing the placements that maximize detection per dollar spent. Public sanitized repo demonstrating the technique on open data.</p>
+        <a href="https://github.com/rmanna80/burlington-camera-map" class="project-link">View on GitHub</a>
+        <span class="project-status status-public">Public repo · open data</span>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-num">02 / Descriptive Analytics</div>
+        <h3>Indecent Exposure Records — Descriptive Analysis</h3>
+        <div class="project-tags">Python · pandas · Statistical reasoning · Honest reporting</div>
+        <p>The request was a person-by-person re-offense prediction. The data — 34 unique individuals across 5 years — couldn't honestly support that. Produced an aggregate descriptive analysis instead: volume trend, repeat-appearance rate, age distribution, co-occurring charges, seasonality, and a hex-binned geographic view. Documented why a predictive model on this dataset would be statistical theater.</p>
+        <a href="indecent_exposure_descriptive_report.html" class="project-link">View report</a>
+        <span class="project-status status-public">Aggregate report · no PII</span>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-num">03 / Sensor Networks</div>
+        <h3>Acoustic Gunshot Detection Pilot</h3>
+        <div class="project-tags">Smartphone sensors · Field deployment</div>
+        <p>Coordinated with Triangula a pilot using software-based acoustic detectors on phones — site selection, sensitivity vs false-positive tradeoffs, and recommendations for scale-up.</p>
+        <span class="project-status status-private">Operational details confidential</span>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-num">04 / Network Analysis</div>
+        <h3>Network Infrastructure Review</h3>
+        <div class="project-tags">Traffic analysis · Pipeline architecture</div>
+        <p>Sat in on internal network calls to map traffic flow, identify bottlenecks, and recommend refinements to a pipeline under active build-out.</p>
+        <span class="project-status status-private">Operational details confidential</span>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-num">05 / Hardware Security</div>
+        <h3>Wireless &amp; Hardware Security Demos</h3>
+        <div class="project-tags">Flipper Zero · BadUSB · Captive portals</div>
+        <p>Live demonstrations covering signal capture/replay, RFID cloning, BadUSB payloads, and rogue captive-portal techniques — paired with defensive recommendations.</p>
+        <a href="https://github.com/rmanna80/FlipperZeroLab" class="project-link">Defender's writeup</a>
+        <span class="project-status status-public">Awareness writeup · public</span>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-num">06 / Red-Team Lab</div>
+        <h3>ATM Jackpotting — Authorized Lab Analysis</h3>
+        <div class="project-tags">CVSS v3.1 · MITRE ATT&amp;CK · PTES / NIST 800-115</div>
+        <p>Red-team lab exercise against a vendor-decommissioned ATM simulator on an air-gapped network. Tested five attack-vector classes (black-box, malware, network, card-layer, insider), produced 33 CVSS-scored findings, and quantified mitigation effectiveness — full-disk encryption and application allowlisting each cut attack success by 60+ points.</p>
+        <a href="ATM_Jackpotting_Lab_Report.pdf" class="project-link">Lab report &amp; findings</a>
+        <span class="project-status status-public">Authorized lab · educational</span>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-num">07 / OSINT</div>
+        <h3>Investigative Mapping</h3>
+        <div class="project-tags">OSINT · Relationship graphs · Public records</div>
+        <p>Built a relationship graph from publicly available sources to support an investigation, with rigorous edge validation and source provenance baked into the workflow.</p>
+        <span class="project-status status-private">Case-tied · confidential</span>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-num">08 / Public Records</div>
+        <h3>OpenOversight Audit &amp; OPSEC Review</h3>
+        <div class="project-tags">FOIA · Metadata · Lucy Parsons Labs · OPSEC</div>
+        <p>Two-part analysis: (1) audited the OpenOversight Burlington dataset for completeness — 107 officers, 110 assignments, 98 salary records, 7 incidents, 0 narratives. (2) Reviewed how the same lawfully-released data creates a downstream OPSEC surface: spear-phishing personalization, pretext-calling fodder, and impersonation risks for ranked personnel.</p>
+        <a href="https://github.com/rmanna80/BPDLucyParsons" class="project-link">View Github</a>
+        <span class="project-status status-public">Audit writeup · public records</span>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills" class="skills">
+  <div class="container">
+    <div class="section-label" style="color: var(--amber);">Capabilities</div>
+    <h2 class="section-title">Skills the work built.</h2>
+
+    <div class="skill-grid">
+      <div class="skill">
+        <div class="skill-num">01</div>
+        <h4>Geospatial optimization</h4>
+        <p>API-driven traffic analysis, scoring functions, coverage-overlap math.</p>
+      </div>
+      <div class="skill">
+        <div class="skill-num">02</div>
+        <h4>Descriptive analytics</h4>
+        <p>Aggregate analysis, statistical honesty, knowing when a predictive model is the wrong tool.</p>
+      </div>
+      <div class="skill">
+        <div class="skill-num">03</div>
+        <h4>OSINT &amp; web scraping</h4>
+        <p>Mapping people, places, and relationships from open sources, with edge validation.</p>
+      </div>
+      <div class="skill">
+        <div class="skill-num">04</div>
+        <h4>Hardware security</h4>
+        <p>Wireless protocols, RF capture/replay, BadUSB, captive-portal defense.</p>
+      </div>
+      <div class="skill">
+        <div class="skill-num">05</div>
+        <h4>Network analysis</h4>
+        <p>Traffic-flow review, pipeline hardening, cross-team translation.</p>
+      </div>
+      <div class="skill">
+        <div class="skill-num">06</div>
+        <h4>Public-records workflow</h4>
+        <p>FOIA processing, metadata audit, redaction QA, transparency analysis.</p>
+      </div>
+      <div class="skill">
+        <div class="skill-num">07</div>
+        <h4>Technical communication</h4>
+        <p>Translating model output and threat findings for command and legal stakeholders.</p>
+      </div>
+      <div class="skill">
+        <div class="skill-num">08</div>
+        <h4>Operational ethics</h4>
+        <p>Working within civil-rights, public-records, and chain-of-custody constraints.</p>
+      </div>
+      <div class="skill">
+        <div class="skill-num">09</div>
+        <h4>Cross-functional fluency</h4>
+        <p>Moving between sworn officers, IT engineers, command, and records staff.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOOLS ============ -->
+<section class="tools">
+  <div class="container">
+    <div class="section-label">Toolbox</div>
+    <h2 class="section-title">What I reach for.</h2>
+
+    <div class="tools-grid">
+      <div class="tool-group reveal">
+        <h4>Languages &amp; libraries</h4>
+        <div class="tool-list">
+          <span>Python</span><span>pandas</span><span>scikit-learn</span>
+          <span>NumPy</span><span>requests</span><span>BeautifulSoup</span>
+          <span>geopandas</span><span>folium</span><span>NetworkX</span>
+        </div>
+      </div>
+      <div class="tool-group reveal">
+        <h4>Hardware &amp; cyber</h4>
+        <div class="tool-list">
+          <span>Flipper Zero</span><span>BadUSB payloads</span>
+          <span>Wireshark</span><span>RF / NFC tools</span>
+          <span>Acoustic sensors</span>
+        </div>
+      </div>
+      <div class="tool-group reveal">
+        <h4>Platforms &amp; workflow</h4>
+        <div class="tool-list">
+          <span>REST APIs</span><span>Datacove (FOIA)</span>
+          <span>Flock Safety</span><span>Git</span>
+          <span>Jupyter</span><span>Excel / GIS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="contact">
+  <div class="container">
+    <h2>Let's <span class="accent">talk</span>.</h2>
+    <p>Open to conversations about applied analytics, public-safety tech, and the policy edges between them. Available for full-time or graduate research opportunities.</p>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:rmanna162@gmail.com">Email</a>
+      <a class="contact-link" href="https://www.linkedin.com/in/ryan-manna/">LinkedIn</a>
+      <a class="contact-link" href="https://github.com/rmanna80">GitHub</a>
+      <!-- <a class="contact-link" href="[resume-url]">Resume (PDF)</a> -->
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    Ryan Manna · 2026 · BUILT WITH RESTRAINT &amp; HTML
+  </div>
+</footer>
+
+<script>
+// Add js-reveal class so CSS knows to hide elements; if JS is off, content shows immediately.
+document.documentElement.classList.add('js-reveal');
+
+// Reveal-on-scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
